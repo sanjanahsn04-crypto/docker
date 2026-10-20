@@ -1,0 +1,13 @@
+PS C:\Users\SinchanaSV\Downloads\ClevelandClinics_OH_LocalDockerTrack\cleveland> docker exec -it cleveland_clinics_db psql -U postgres -d cleveland_clinics_oh -c "SET search_path TO clinic; SELECT * FROM etl_load_log ORDER BY load_id DESC LIMIT 8;"
+
+ load_id |  table_name   | rows_extracted | rows_loaded |         started_at         |        finished_at         | status  |             notes
+---------+---------------+----------------+-------------+----------------------------+----------------------------+---------+-------------------------------
+       8 | surgeries     |           1500 |        1500 | 2026-09-01 08:32:31.35492  | 2026-09-01 08:32:31.552636 | SUCCESS | loaded from surgeries.csv
+       7 | prescriptions |           9000 |        9000 | 2026-09-01 08:32:30.48881  | 2026-09-01 08:32:31.35299  | SUCCESS | loaded from prescriptions.csv
+       6 | lab_reports   |           7500 |        7500 | 2026-09-01 08:32:29.841738 | 2026-09-01 08:32:30.486791 | SUCCESS | loaded from lab_reports.csv
+       5 | billing       |           5000 |        5000 | 2026-09-01 08:32:28.881799 | 2026-09-01 08:32:29.830775 | SUCCESS | loaded from billing.csv
+       4 | appointments  |          12000 |       11994 | 2026-09-01 08:32:27.16949  | 2026-09-01 08:32:28.875823 | SUCCESS | loaded from appointments.csv
+       3 | branches      |            100 |         100 | 2026-09-01 08:32:27.122655 | 2026-09-01 08:32:27.167697 | SUCCESS | loaded from branches.csv
+       2 | doctors       |            200 |         200 | 2026-09-01 08:32:27.054459 | 2026-09-01 08:32:27.119548 | SUCCESS | loaded from doctors.csv
+       1 | patients      |           2300 |        2300 | 2026-09-01 08:32:26.609791 | 2026-09-01 08:32:27.051667 | SUCCESS | loaded from patients.csv
+(8 rows)

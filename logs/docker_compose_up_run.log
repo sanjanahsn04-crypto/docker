@@ -1,0 +1,102 @@
+PS C:\Users\SinchanaSV\Downloads\ClevelandClinics_OH_LocalDockerTrack\cleveland> docker compose up --build
+...
+[+] up 7/7
+ ✔ Image cleveland-report             Built                                    6.8s
+ ✔ Image cleveland-etl                Built                                    6.8s
+ ✔ Network cleveland_default          Created                                  0.1s
+ ✔ Volume cleveland_cleveland_pg_data Created                                  0.0s
+ ✔ Container cleveland_clinics_db     Created                                  1.1s
+ ✔ Container cleveland_etl_job        Created                                  0.5s
+ ✔ Container cleveland_report_job     Created                                  0.9s
+Attaching to cleveland_clinics_db, cleveland_etl_job, cleveland_report_job
+...
+cleveland_clinics_db  | 2026-09-01 08:32:23.899 UTC [1] LOG:  database system is ready to accept connections
+cleveland_etl_job     | 2026-09-01 08:32:24,933 | INFO    | Applying schema (etl/schema.sql)...
+cleveland_etl_job     | 2026-09-01 08:32:26,066 | INFO    | Clearing existing rows for a clean, idempotent reload ...
+cleveland_etl_job     | 2026-09-01 08:32:26,609 | INFO    | Extracting data/patients.csv ...
+cleveland_etl_job     | 2026-09-01 08:32:26,623 | INFO    | Transforming -> patients ...
+cleveland_etl_job     | 2026-09-01 08:32:26,645 | INFO    | Loading -> clinic.patients (2300 rows) ...
+cleveland_etl_job     | 2026-09-01 08:32:27,054 | INFO    | Done: patients (2300 -> 2300 rows) in 0.44s
+cleveland_etl_job     | 2026-09-01 08:32:27,054 | INFO    | Extracting data/doctors.csv ...
+cleveland_etl_job     | 2026-09-01 08:32:27,122 | INFO    | Done: doctors (200 -> 200 rows) in 0.07s
+cleveland_etl_job     | 2026-09-01 08:32:27,122 | INFO    | Extracting data/branches.csv ...
+cleveland_etl_job     | 2026-09-01 08:32:27,169 | INFO    | Done: branches (100 -> 100 rows) in 0.05s
+cleveland_etl_job     | 2026-09-01 08:32:27,169 | INFO    | Extracting data/appointments.csv ...
+cleveland_etl_job     | 2026-09-01 08:32:28,881 | INFO    | Done: appointments (12000 -> 11994 rows) in 1.71s
+cleveland_etl_job     | 2026-09-01 08:32:28,881 | INFO    | Extracting data/billing.csv ...
+cleveland_etl_job     | 2026-09-01 08:32:29,841 | INFO    | Done: billing (5000 -> 5000 rows) in 0.95s
+cleveland_etl_job     | 2026-09-01 08:32:29,841 | INFO    | Extracting data/lab_reports.csv ...
+cleveland_etl_job     | 2026-09-01 08:32:30,488 | INFO    | Done: lab_reports (7500 -> 7500 rows) in 0.65s
+cleveland_etl_job     | 2026-09-01 08:32:30,488 | INFO    | Extracting data/prescriptions.csv ...
+cleveland_etl_job     | 2026-09-01 08:32:31,354 | INFO    | Done: prescriptions (9000 -> 9000 rows) in 0.86s
+cleveland_etl_job     | 2026-09-01 08:32:31,354 | INFO    | Extracting data/surgeries.csv ...
+cleveland_etl_job     | 2026-09-01 08:32:31,554 | INFO    | Done: surgeries (1500 -> 1500 rows) in 0.20s
+cleveland_etl_job     | 2026-09-01 08:32:31,554 | INFO    | Running referential-integrity / data-quality checks ...
+cleveland_etl_job     | 2026-09-01 08:32:31,557 | INFO    |   appointments.patient_id -> patients.patient_id : 5 / 11994 matched (0.04%)
+cleveland_etl_job     | 2026-09-01 08:32:31,559 | INFO    |   appointments.branch_id -> branches.branch_id : 1472 / 11994 matched (12.27%)
+cleveland_etl_job     | 2026-09-01 08:32:31,561 | INFO    |   appointments.consulted_doctor_id -> doctors.doctor_id : 0 / 11994 matched (0.00%)
+cleveland_etl_job     | 2026-09-01 08:32:31,562 | INFO    |   billing.patient_id -> patients.patient_id : 4 / 5000 matched (0.08%)
+cleveland_etl_job     | 2026-09-01 08:32:31,579 | INFO    |   billing.branch_id -> branches.branch_id : 524 / 5000 matched (10.48%)
+cleveland_etl_job     | 2026-09-01 08:32:31,589 | INFO    |   lab_reports.patient_id -> patients.patient_id : 2 / 7500 matched (0.03%)
+cleveland_etl_job     | 2026-09-01 08:32:31,594 | INFO    |   lab_reports.branch_id -> branches.branch_id : 786 / 7500 matched (10.48%)
+cleveland_etl_job     | 2026-09-01 08:32:31,598 | INFO    |   prescriptions.patient_id -> patients.patient_id : 2 / 9000 matched (0.02%)
+cleveland_etl_job     | 2026-09-01 08:32:31,603 | INFO    |   prescriptions.doctor_id -> doctors.doctor_id : 0 / 9000 matched (0.00%)
+cleveland_etl_job     | 2026-09-01 08:32:31,604 | INFO    |   surgeries.patient_id -> patients.patient_id : 0 / 1500 matched (0.00%)
+cleveland_etl_job     | 2026-09-01 08:32:31,605 | INFO    |   surgeries.doctor_id -> doctors.doctor_id : 0 / 1500 matched (0.00%)
+cleveland_etl_job     | 2026-09-01 08:32:31,606 | INFO    |   surgeries.branch_id -> branches.branch_id : 154 / 1500 matched (10.27%)
+cleveland_etl_job     | 2026-09-01 08:32:31,610 | INFO    | ETL run complete.
+cleveland_etl_job exited with code 0
+Container cleveland_etl_job Exited
+cleveland_report_job  | 2026-09-01 08:32:32,623 | INFO    | Generating report (scope=summary) ...
+cleveland_report_job  | ======================================================================
+cleveland_report_job  | CLEVELAND CLINICS, OH — DAILY OPERATIONS REPORT
+cleveland_report_job  | Report scope : ALL LOADED DATA (summary)
+cleveland_report_job  | Generated at : 2026-09-01T08:32:32
+cleveland_report_job  | ======================================================================
+cleveland_report_job  |
+cleveland_report_job  | 1. PATIENT VISITS
+cleveland_report_job  | ----------------------------------------
+cleveland_report_job  | Total appointments: 11994
+cleveland_report_job  | Follow-ups required: 5934 of 11994
+cleveland_report_job  |
+cleveland_report_job  | Top branches by visits:
+cleveland_report_job  |   ST73       52 visits
+cleveland_report_job  |   FR97       52 visits
+cleveland_report_job  |   CU88       51 visits
+cleveland_report_job  |   FR15       49 visits
+cleveland_report_job  |   ME24       48 visits
+cleveland_report_job  |   ST43       48 visits
+cleveland_report_job  |   ST91       46 visits
+cleveland_report_job  |   CU95       46 visits
+cleveland_report_job  |   CU98       46 visits
+cleveland_report_job  |   CU87       45 visits
+cleveland_report_job  |
+cleveland_report_job  | 2. REVENUE
+cleveland_report_job  | ----------------------------------------
+cleveland_report_job  | Claims processed        : 5000
+cleveland_report_job  | Total billed            : $128,137,627.30
+cleveland_report_job  | Total covered by ins.   : $76,698,225.54
+cleveland_report_job  | Total out-of-pocket     : $51,439,401.76
+cleveland_report_job  |
+cleveland_report_job  | By claim status:
+cleveland_report_job  |   Rejected   1727 claims  $44,640,888.40
+cleveland_report_job  |   Approved   1708 claims  $43,767,305.10
+cleveland_report_job  |   Pending    1565 claims  $39,729,433.80
+cleveland_report_job  |
+cleveland_report_job  | 3. MOST COMMON DIAGNOSES
+cleveland_report_job  | ----------------------------------------
+cleveland_report_job  |   Arthritis            1260 cases
+cleveland_report_job  |   Sciatica             1247 cases
+cleveland_report_job  |   Bronchitis           1237 cases
+cleveland_report_job  |   Gastritis            1237 cases
+cleveland_report_job  |   Viral Infection      1205 cases
+cleveland_report_job  |   Asthma               1172 cases
+cleveland_report_job  |   Vertigo              1166 cases
+cleveland_report_job  |   Angina               1165 cases
+cleveland_report_job  |   Dermatitis           1160 cases
+cleveland_report_job  |   Migraine             1145 cases
+cleveland_report_job  |
+cleveland_report_job  | ======================================================================
+cleveland_report_job  | End of report.
+cleveland_report_job  | 2026-09-01 08:32:32,668 | INFO    | Report written to sample_output/daily_report_summary_20260901_083232.txt
+cleveland_report_job exited with code 0
