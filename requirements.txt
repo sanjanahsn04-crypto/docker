@@ -1,0 +1,9 @@
+pandas>=2.0
+SQLAlchemy>=2.0
+psycopg2-binary>=2.9   # PostgreSQL driver
+PyMySQL>=1.1            # MySQL driver
+
+# Optional, only needed for the AWS/Azure extension scripts:
+boto3>=1.34            # AWS S3 / Glue / Lambda / Athena
+azure-storage-blob>=12  # Azure Blob Storage upload script
+azure-identity>=1.15
