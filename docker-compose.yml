@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:16
+    container_name: cleveland_clinics_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cleveland_clinics_oh
+    ports:
+      - "5433:5432"   # host:container
+    volumes:
+      - cleveland_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  etl:
+    build: .
+    container_name: cleveland_etl_job
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_URL: "postgresql+psycopg2://postgres:postgres@db:5432/cleveland_clinics_oh"
+    command: ["python", "etl/etl_pipeline.py", "--data-dir", "./data", "--schema-file", "./etl/schema.sql",
+              "--db-url", "postgresql+psycopg2://postgres:postgres@db:5432/cleveland_clinics_oh"]
+
+  # Runs report_generator.py once, in summary mode, right after the ETL job.
+  # For an actual recurring "daily" job, run this same image on a schedule
+  # instead (cron / Task Scheduler / systemd timer / cloud scheduler — see README).
+  report:
+    build: .
+    container_name: cleveland_report_job
+    depends_on:
+      etl:
+        condition: service_completed_successfully
+    environment:
+      DB_URL: "postgresql+psycopg2://postgres:postgres@db:5432/cleveland_clinics_oh"
+    volumes:
+      - ./sample_output:/app/sample_output
+    command: ["python", "reports/report_generator.py", "--summary",
+              "--db-url", "postgresql+psycopg2://postgres:postgres@db:5432/cleveland_clinics_oh",
+              "--output-dir", "./sample_output"]
+
+volumes:
+  cleveland_pg_data:
