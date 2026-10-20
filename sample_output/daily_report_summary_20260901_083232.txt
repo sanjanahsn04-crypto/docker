@@ -1,0 +1,50 @@
+======================================================================
+CLEVELAND CLINICS, OH — DAILY OPERATIONS REPORT
+Report scope : ALL LOADED DATA (summary)
+Generated at : 2026-09-01T08:32:32
+======================================================================
+
+1. PATIENT VISITS
+----------------------------------------
+Total appointments: 11994
+Follow-ups required: 5934 of 11994
+
+Top branches by visits:
+  ST73       52 visits
+  FR97       52 visits
+  CU88       51 visits
+  FR15       49 visits
+  ME24       48 visits
+  ST43       48 visits
+  ST91       46 visits
+  CU95       46 visits
+  CU98       46 visits
+  CU87       45 visits
+
+2. REVENUE
+----------------------------------------
+Claims processed        : 5000
+Total billed            : $128,137,627.30
+Total covered by ins.   : $76,698,225.54
+Total out-of-pocket     : $51,439,401.76
+
+By claim status:
+  Rejected   1727 claims  $44,640,888.40
+  Approved   1708 claims  $43,767,305.10
+  Pending    1565 claims  $39,729,433.80
+
+3. MOST COMMON DIAGNOSES
+----------------------------------------
+  Arthritis            1260 cases
+  Sciatica             1247 cases
+  Bronchitis           1237 cases
+  Gastritis            1237 cases
+  Viral Infection      1205 cases
+  Asthma               1172 cases
+  Vertigo              1166 cases
+  Angina               1165 cases
+  Dermatitis           1160 cases
+  Migraine             1145 cases
+
+======================================================================
+End of report.
